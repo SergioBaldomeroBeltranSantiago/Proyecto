@@ -67,7 +67,7 @@ namespace ImagenesPiezas
                 Visualizer.Image = null;
                 string ori_directory = (string)filepathss[0];
                 string new_directory = folderpath + "\\Imagenes Aprobadas\\" + Path.GetFileName((string)filepathss[0]);
-                File.Copy(ori_directory, new_directory);
+                File.Move(ori_directory, new_directory);
                 ImageRotator();
             }
         }
@@ -84,7 +84,7 @@ namespace ImagenesPiezas
                 Visualizer.Image = null;
                 string ori_directory = (string)filepathss[0];
                 string new_directory = folderpath + "\\Imagenes No Aprobadas\\" + Path.GetFileName((string)filepathss[0]);
-                File.Copy(ori_directory, new_directory);
+                File.Move(ori_directory, new_directory);
                 ImageRotator();
             }
         }
