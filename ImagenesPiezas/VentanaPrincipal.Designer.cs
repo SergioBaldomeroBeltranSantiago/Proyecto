@@ -31,12 +31,12 @@ namespace ImagenesPiezas
         {
             this.ControlBox = new System.Windows.Forms.GroupBox();
             this.Btn_OpenFolder = new System.Windows.Forms.Button();
+            this.Btn_Voltear_Imagen = new System.Windows.Forms.Button();
             this.Btn_Rotate = new System.Windows.Forms.Button();
+            this.Btn_Imagen_No_Aprobada = new System.Windows.Forms.Button();
+            this.Btn_Imagen_Aprobada = new System.Windows.Forms.Button();
             this.FolderOpener = new System.Windows.Forms.FolderBrowserDialog();
             this.Visualizer = new System.Windows.Forms.PictureBox();
-            this.Btn_Imagen_Aprobada = new System.Windows.Forms.Button();
-            this.Btn_Imagen_No_Aprobada = new System.Windows.Forms.Button();
-            this.Btn_Voltear_Imagen = new System.Windows.Forms.Button();
             this.ControlBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Visualizer)).BeginInit();
             this.SuspendLayout();
@@ -66,15 +66,58 @@ namespace ImagenesPiezas
             this.Btn_OpenFolder.UseVisualStyleBackColor = true;
             this.Btn_OpenFolder.Click += new System.EventHandler(this.Btn_OpenFolder_Click);
             // 
+            // Btn_Voltear_Imagen
+            // 
+            this.Btn_Voltear_Imagen.Location = new System.Drawing.Point(6, 162);
+            this.Btn_Voltear_Imagen.Name = "Btn_Voltear_Imagen";
+            this.Btn_Voltear_Imagen.Size = new System.Drawing.Size(217, 42);
+            this.Btn_Voltear_Imagen.TabIndex = 6;
+            this.Btn_Voltear_Imagen.TabStop = false;
+            this.Btn_Voltear_Imagen.Text = "Voltear";
+            this.Btn_Voltear_Imagen.UseVisualStyleBackColor = true;
+            this.Btn_Voltear_Imagen.Visible = false;
+            this.Btn_Voltear_Imagen.Click += new System.EventHandler(this.Btn_Voltear_Imagen_Click);
+            // 
             // Btn_Rotate
             // 
+            this.Btn_Rotate.Enabled = false;
             this.Btn_Rotate.Location = new System.Drawing.Point(6, 114);
             this.Btn_Rotate.Name = "Btn_Rotate";
             this.Btn_Rotate.Size = new System.Drawing.Size(217, 42);
             this.Btn_Rotate.TabIndex = 3;
             this.Btn_Rotate.Text = "Rotar";
             this.Btn_Rotate.UseVisualStyleBackColor = true;
+            this.Btn_Rotate.Visible = false;
             this.Btn_Rotate.Click += new System.EventHandler(this.Btn_RotateRight_Click);
+            // 
+            // Btn_Imagen_No_Aprobada
+            // 
+            this.Btn_Imagen_No_Aprobada.Enabled = false;
+            this.Btn_Imagen_No_Aprobada.Location = new System.Drawing.Point(6, 272);
+            this.Btn_Imagen_No_Aprobada.Name = "Btn_Imagen_No_Aprobada";
+            this.Btn_Imagen_No_Aprobada.Size = new System.Drawing.Size(217, 36);
+            this.Btn_Imagen_No_Aprobada.TabIndex = 5;
+            this.Btn_Imagen_No_Aprobada.Text = "No Aprobada";
+            this.Btn_Imagen_No_Aprobada.UseVisualStyleBackColor = true;
+            this.Btn_Imagen_No_Aprobada.Visible = false;
+            this.Btn_Imagen_No_Aprobada.Click += new System.EventHandler(this.Btn_Imagen_No_Aprobada_Click);
+            // 
+            // Btn_Imagen_Aprobada
+            // 
+            this.Btn_Imagen_Aprobada.Enabled = false;
+            this.Btn_Imagen_Aprobada.Location = new System.Drawing.Point(6, 228);
+            this.Btn_Imagen_Aprobada.Name = "Btn_Imagen_Aprobada";
+            this.Btn_Imagen_Aprobada.Size = new System.Drawing.Size(217, 38);
+            this.Btn_Imagen_Aprobada.TabIndex = 4;
+            this.Btn_Imagen_Aprobada.Text = "Aprobada";
+            this.Btn_Imagen_Aprobada.UseVisualStyleBackColor = true;
+            this.Btn_Imagen_Aprobada.Visible = false;
+            this.Btn_Imagen_Aprobada.Click += new System.EventHandler(this.Btn_Imagen_Aprobada_Click);
+            // 
+            // FolderOpener
+            // 
+            this.FolderOpener.Description = "Seleccione la carpeta";
+            this.FolderOpener.ShowNewFolderButton = false;
             // 
             // Visualizer
             // 
@@ -84,36 +127,6 @@ namespace ImagenesPiezas
             this.Visualizer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Visualizer.TabIndex = 1;
             this.Visualizer.TabStop = false;
-            // 
-            // Btn_Imagen_Aprobada
-            // 
-            this.Btn_Imagen_Aprobada.Location = new System.Drawing.Point(6, 228);
-            this.Btn_Imagen_Aprobada.Name = "Btn_Imagen_Aprobada";
-            this.Btn_Imagen_Aprobada.Size = new System.Drawing.Size(217, 38);
-            this.Btn_Imagen_Aprobada.TabIndex = 4;
-            this.Btn_Imagen_Aprobada.Text = "Aprobada";
-            this.Btn_Imagen_Aprobada.UseVisualStyleBackColor = true;
-            this.Btn_Imagen_Aprobada.Click += new System.EventHandler(this.Btn_Imagen_Aprobada_Click);
-            // 
-            // Btn_Imagen_No_Aprobada
-            // 
-            this.Btn_Imagen_No_Aprobada.Location = new System.Drawing.Point(6, 272);
-            this.Btn_Imagen_No_Aprobada.Name = "Btn_Imagen_No_Aprobada";
-            this.Btn_Imagen_No_Aprobada.Size = new System.Drawing.Size(217, 36);
-            this.Btn_Imagen_No_Aprobada.TabIndex = 5;
-            this.Btn_Imagen_No_Aprobada.Text = "No Aprobada";
-            this.Btn_Imagen_No_Aprobada.UseVisualStyleBackColor = true;
-            this.Btn_Imagen_No_Aprobada.Click += new System.EventHandler(this.Btn_Imagen_No_Aprobada_Click);
-            // 
-            // Btn_Voltear_Imagen
-            // 
-            this.Btn_Voltear_Imagen.Location = new System.Drawing.Point(6, 162);
-            this.Btn_Voltear_Imagen.Name = "Btn_Voltear_Imagen";
-            this.Btn_Voltear_Imagen.Size = new System.Drawing.Size(217, 42);
-            this.Btn_Voltear_Imagen.TabIndex = 6;
-            this.Btn_Voltear_Imagen.Text = "Voltear";
-            this.Btn_Voltear_Imagen.UseVisualStyleBackColor = true;
-            this.Btn_Voltear_Imagen.Click += new System.EventHandler(this.Btn_Voltear_Imagen_Click);
             // 
             // VentanaPrincipal
             // 

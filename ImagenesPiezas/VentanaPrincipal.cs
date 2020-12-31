@@ -17,10 +17,10 @@ namespace ImagenesPiezas
     public partial class VentanaPrincipal : Form
     {
 
-        string folderpath;
+        string path;
         string[] filepaths;
-        ArrayList filepathss = new ArrayList();
-        Image ori_imagen, mod_imagen;
+        ArrayList filenames = new ArrayList();
+        Image imagen_display;
         public VentanaPrincipal()
         {
             InitializeComponent();
@@ -28,20 +28,26 @@ namespace ImagenesPiezas
 
         private void Btn_OpenFolder_Click(object sender, EventArgs e)
         {
-            DialogResult result = FolderOpener.ShowDialog();
-            if (result == DialogResult.OK)
+            FolderOpener.ShowDialog();
+            if (FolderOpener.SelectedPath.Length > 0)
             {
-                folderpath = FolderOpener.SelectedPath;
-                filepaths = Directory.GetFiles(folderpath);
+                path = FolderOpener.SelectedPath;
+                filepaths = Directory.GetFiles(path) ;
                 if (filepaths.Length > 0)
                 {
-                    for (int i = 0; i < filepaths.Length; i++)
+                    foreach (string file in filepaths)
                     {
-                        filepathss.Add(filepaths[i]);
+                        filenames.Add(Path.GetFileName(file));
                     }
+                    filepaths = new string[0];
                     Btn_OpenFolder.Enabled = false;
+                    Btn_Imagen_Aprobada.Enabled = Btn_Imagen_Aprobada.Visible = true;
+                    Btn_Imagen_No_Aprobada.Enabled = Btn_Imagen_No_Aprobada.Visible = true;
+                    Btn_Rotate.Enabled = Btn_Rotate.Visible = true;
+                    Btn_Voltear_Imagen.Enabled = Btn_Voltear_Imagen.Visible = true;
+                    FolderOpener.Dispose();
+                    CreateImage(path + "\\" + (string)filenames[0]);
                 }
-                CreateImage((string)filepathss[0]);
             }
         }
 
@@ -57,62 +63,71 @@ namespace ImagenesPiezas
 
         private void Btn_Imagen_Aprobada_Click(object sender, EventArgs e)
         {
-            DialogResult resulttwo = MessageBox.Show("Esta a punto de aprobar una imagen\n¿Esta seguro de esto? ", "Confirmacion", MessageBoxButtons.YesNo);
-            if (resulttwo == DialogResult.Yes)
-            {
-                if (!File.Exists(folderpath + "\\Imagenes Aprobadas"))
+            Visualizer.Image = null;
+            imagen_display.Dispose();
+            DialogResult result = MessageBox.Show("Esta a punto de aprobar una imagen\n¿Esta seguro de esto? ", "Confirmacion", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes) {
+                if (!File.Exists(path + "\\Imagenes Aprobadas"))
                 {
-                    Directory.CreateDirectory(folderpath + "\\Imagenes Aprobadas");
+                    Directory.CreateDirectory(path + "\\Imagenes Aprobadas");
                 }
-                Visualizer.Image = null;
-                string ori_directory = (string)filepathss[0];
-                string new_directory = folderpath + "\\Imagenes Aprobadas\\" + Path.GetFileName((string)filepathss[0]);
-                File.Move(ori_directory, new_directory);
-                ImageRotator();
+                if (!File.Exists(path + "\\Imagenes Aprobadas\\" + filenames[0]))
+                {
+                    File.Move(path + "\\" + (string)filenames[0], path + "\\Imagenes Aprobadas\\" + (string)filenames[0]);
+                }
+                else
+                {
+                    File.Delete(path + "\\" + (string)filenames[0]);
+                }
+                ImageChanger();
             }
         }
 
         private void Btn_Imagen_No_Aprobada_Click(object sender, EventArgs e)
         {
-            DialogResult resultthree = MessageBox.Show("Esta a punto de desaprobar una imagen\n¿Esta seguro de esto? ", "Confirmacion", MessageBoxButtons.YesNo);
-            if (resultthree == DialogResult.Yes)
-            {
-                if (!File.Exists(folderpath + "\\Imagenes No Aprobadas"))
+            Visualizer.Image = null;
+            imagen_display.Dispose();
+            DialogResult result = MessageBox.Show("Esta a punto de desaprobar una imagen\n¿Esta seguro de esto? ", "Confirmacion", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes) {
+                if (!File.Exists(path + "\\Imagenes No Aprobadas"))
                 {
-                    Directory.CreateDirectory(folderpath + "\\Imagenes No Aprobadas");
+                    Directory.CreateDirectory(path + "\\Imagenes No Aprobadas");
                 }
-                Visualizer.Image = null;
-                string ori_directory = (string)filepathss[0];
-                string new_directory = folderpath + "\\Imagenes No Aprobadas\\" + Path.GetFileName((string)filepathss[0]);
-                File.Move(ori_directory, new_directory);
-                ImageRotator();
+                if (!File.Exists(path + "\\Imagenes No Aprobadas\\" + filenames[0]))
+                {
+                    File.Move(path + "\\" + (string)filenames[0], path + "\\Imagenes No Aprobadas\\" + (string)filenames[0]);
+                }
+                else {
+                    File.Delete(path + "\\" + (string)filenames[0]);
+                }
+                ImageChanger();
             }
         }
 
 
         public void RotateImageHalfCircle()
         {
-            mod_imagen.RotateFlip(RotateFlipType.Rotate180FlipNone);
-            Visualizer.Image = mod_imagen;
-        }
-
-
-        public void ImageRotator()
-        {
-            filepathss.RemoveAt(0);
-            CreateImage((string)filepathss[0]);
-        }
-        public void CreateImage(string path)
-        {
-            ori_imagen = Image.FromFile(path);
-            Visualizer.Image = ori_imagen;
-            mod_imagen = ori_imagen;
+            imagen_display.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            Visualizer.Image = imagen_display;
         }
 
         public void RotateImageRight()
         {
-            mod_imagen.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            Visualizer.Image = mod_imagen;
+            imagen_display.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            Visualizer.Image = imagen_display;
         }
+
+
+        public void ImageChanger()
+        {
+            filenames.RemoveAt(0);
+            CreateImage(path+"\\"+(string)filenames[0]);
+        }
+        public void CreateImage(string imagepath)
+        {
+            Visualizer.Image = imagen_display = Image.FromFile(imagepath);
+        }
+
+
     }
 }
