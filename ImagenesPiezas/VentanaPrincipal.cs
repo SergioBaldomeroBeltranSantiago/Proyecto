@@ -40,11 +40,7 @@ namespace ImagenesPiezas
                         filenames.Add(Path.GetFileName(file));
                     }
                     filepaths = new string[0];
-                    Btn_OpenFolder.Enabled = false;
-                    Btn_Imagen_Aprobada.Enabled = Btn_Imagen_Aprobada.Visible = true;
-                    Btn_Imagen_No_Aprobada.Enabled = Btn_Imagen_No_Aprobada.Visible = true;
-                    Btn_Rotate.Enabled = Btn_Rotate.Visible = true;
-                    Btn_Voltear_Imagen.Enabled = Btn_Voltear_Imagen.Visible = true;
+                    ButtonSwitch(true);
                     FolderOpener.Dispose();
                     CreateImage(path + "\\" + (string)filenames[0]);
                 }
@@ -104,6 +100,16 @@ namespace ImagenesPiezas
             }
         }
 
+        private void Btn_Reiniciar_Click(object sender, EventArgs e)
+        {
+            Btn_OpenFolder_Click(sender, e);
+        }
+
+        private void Btn_Salir_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
 
         public void RotateImageHalfCircle()
         {
@@ -120,14 +126,28 @@ namespace ImagenesPiezas
 
         public void ImageChanger()
         {
-            filenames.RemoveAt(0);
-            CreateImage(path+"\\"+(string)filenames[0]);
+            if (filenames.Count > 0)
+            {
+                filenames.RemoveAt(0);
+                CreateImage(path + "\\" + (string)filenames[0]);
+            }
+            else {
+                ButtonSwitch(false);
+                MessageBox.Show("Se han agotado las imagenes dentro de la carpeta","Aviso",MessageBoxButtons.OK);
+            }
         }
         public void CreateImage(string imagepath)
         {
             Visualizer.Image = imagen_display = Image.FromFile(imagepath);
         }
 
-
+        public void ButtonSwitch(bool state) {
+            Btn_OpenFolder.Enabled = !state;
+            Btn_Imagen_Aprobada.Enabled = Btn_Imagen_Aprobada.Visible = state;
+            Btn_Imagen_No_Aprobada.Enabled = Btn_Imagen_No_Aprobada.Visible = state;
+            Btn_Rotate.Enabled = Btn_Rotate.Visible = state;
+            Btn_Voltear_Imagen.Enabled = Btn_Voltear_Imagen.Visible = state;
+            Btn_Reiniciar.Enabled = Btn_Reiniciar.Visible = state;
+        }
     }
 }
