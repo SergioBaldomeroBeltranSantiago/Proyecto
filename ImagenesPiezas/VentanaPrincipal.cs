@@ -21,9 +21,19 @@ namespace ImagenesPiezas
         string[] filepaths;
         ArrayList filenames = new ArrayList();
         Image imagen_display;
+        Bitmap bm;
+        Graphics gpu;
         public VentanaPrincipal()
         {
             InitializeComponent();
+        }
+
+        private void VentanaPrincipal_Load(object sender, EventArgs e)
+        {
+            ZoomTool.Minimum = ZoomTool.SmallChange = ZoomTool.LargeChange = 1;
+            ZoomTool.Maximum = 6;
+            ZoomTool.UseWaitCursor = false;
+            this.DoubleBuffered = true;
         }
 
         private void Btn_OpenFolder_Click(object sender, EventArgs e)
@@ -59,10 +69,10 @@ namespace ImagenesPiezas
 
         private void Btn_Imagen_Aprobada_Click(object sender, EventArgs e)
         {
-            Visualizer.Image = null;
-            imagen_display.Dispose();
             DialogResult result = MessageBox.Show("Esta a punto de aprobar una imagen\n¿Esta seguro de esto? ", "Confirmacion", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes) {
+                Visualizer.Image = null;
+                imagen_display.Dispose();
                 if (!File.Exists(path + "\\Imagenes Aprobadas"))
                 {
                     Directory.CreateDirectory(path + "\\Imagenes Aprobadas");
@@ -81,10 +91,12 @@ namespace ImagenesPiezas
 
         private void Btn_Imagen_No_Aprobada_Click(object sender, EventArgs e)
         {
-            Visualizer.Image = null;
-            imagen_display.Dispose();
             DialogResult result = MessageBox.Show("Esta a punto de desaprobar una imagen\n¿Esta seguro de esto? ", "Confirmacion", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes) {
+                Visualizer.Image = null;
+                imagen_display.Dispose();
+                bm.Dispose();
+                gpu.Dispose();
                 if (!File.Exists(path + "\\Imagenes No Aprobadas"))
                 {
                     Directory.CreateDirectory(path + "\\Imagenes No Aprobadas");
@@ -126,7 +138,7 @@ namespace ImagenesPiezas
 
         public void ImageChanger()
         {
-            if (filenames.Count > 0)
+            if (filenames.Count > 1)
             {
                 filenames.RemoveAt(0);
                 CreateImage(path + "\\" + (string)filenames[0]);
@@ -139,6 +151,14 @@ namespace ImagenesPiezas
         public void CreateImage(string imagepath)
         {
             Visualizer.Image = imagen_display = Image.FromFile(imagepath);
+            ZoomTool.Value = ZoomTool.Minimum;
+        }
+
+        public Image ZoomImage(Image imagen_modificar, Size tamaño_deseado) {
+            bm = new Bitmap(imagen_modificar, Convert.ToInt32(imagen_modificar.Width * tamaño_deseado.Width), Convert.ToInt32(imagen_modificar.Height * tamaño_deseado.Height));
+            gpu = Graphics.FromImage(bm);
+            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            return bm;
         }
 
         public void ButtonSwitch(bool state) {
@@ -148,6 +168,15 @@ namespace ImagenesPiezas
             Btn_Rotate.Enabled = Btn_Rotate.Visible = state;
             Btn_Voltear_Imagen.Enabled = Btn_Voltear_Imagen.Visible = state;
             Btn_Reiniciar.Enabled = Btn_Reiniciar.Visible = state;
+            ZoomTool.Enabled = ZoomTool.Visible = state;
+        }
+
+        private void ZoomTool_Scroll(object sender, EventArgs e)
+        {
+            if (ZoomTool.Value != 0) {
+                Visualizer.Image = null;
+                Visualizer.Image = ZoomImage(imagen_display,new Size(ZoomTool.Value,ZoomTool.Value));
+            }
         }
     }
 }

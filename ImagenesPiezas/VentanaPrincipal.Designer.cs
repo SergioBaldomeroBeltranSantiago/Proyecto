@@ -30,6 +30,8 @@ namespace ImagenesPiezas
         private void InitializeComponent()
         {
             this.ControlBox = new System.Windows.Forms.GroupBox();
+            this.Btn_Reiniciar = new System.Windows.Forms.Button();
+            this.Btn_Salir = new System.Windows.Forms.Button();
             this.Btn_OpenFolder = new System.Windows.Forms.Button();
             this.Btn_Voltear_Imagen = new System.Windows.Forms.Button();
             this.Btn_Rotate = new System.Windows.Forms.Button();
@@ -37,14 +39,17 @@ namespace ImagenesPiezas
             this.Btn_Imagen_Aprobada = new System.Windows.Forms.Button();
             this.FolderOpener = new System.Windows.Forms.FolderBrowserDialog();
             this.Visualizer = new System.Windows.Forms.PictureBox();
-            this.Btn_Salir = new System.Windows.Forms.Button();
-            this.Btn_Reiniciar = new System.Windows.Forms.Button();
+            this.ImageContainer = new System.Windows.Forms.Panel();
+            this.ZoomTool = new System.Windows.Forms.TrackBar();
             this.ControlBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Visualizer)).BeginInit();
+            this.ImageContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ZoomTool)).BeginInit();
             this.SuspendLayout();
             // 
             // ControlBox
             // 
+            this.ControlBox.Controls.Add(this.ZoomTool);
             this.ControlBox.Controls.Add(this.Btn_Reiniciar);
             this.ControlBox.Controls.Add(this.Btn_Salir);
             this.ControlBox.Controls.Add(this.Btn_OpenFolder);
@@ -60,6 +65,28 @@ namespace ImagenesPiezas
             this.ControlBox.TabStop = false;
             this.ControlBox.Text = "Controles";
             // 
+            // Btn_Reiniciar
+            // 
+            this.Btn_Reiniciar.Enabled = false;
+            this.Btn_Reiniciar.Location = new System.Drawing.Point(6, 97);
+            this.Btn_Reiniciar.Name = "Btn_Reiniciar";
+            this.Btn_Reiniciar.Size = new System.Drawing.Size(226, 36);
+            this.Btn_Reiniciar.TabIndex = 8;
+            this.Btn_Reiniciar.Text = "Cambiar Carpeta";
+            this.Btn_Reiniciar.UseVisualStyleBackColor = true;
+            this.Btn_Reiniciar.Visible = false;
+            this.Btn_Reiniciar.Click += new System.EventHandler(this.Btn_Reiniciar_Click);
+            // 
+            // Btn_Salir
+            // 
+            this.Btn_Salir.Location = new System.Drawing.Point(6, 615);
+            this.Btn_Salir.Name = "Btn_Salir";
+            this.Btn_Salir.Size = new System.Drawing.Size(226, 36);
+            this.Btn_Salir.TabIndex = 7;
+            this.Btn_Salir.Text = "Salir";
+            this.Btn_Salir.UseVisualStyleBackColor = true;
+            this.Btn_Salir.Click += new System.EventHandler(this.Btn_Salir_Click);
+            // 
             // Btn_OpenFolder
             // 
             this.Btn_OpenFolder.Location = new System.Drawing.Point(6, 45);
@@ -72,7 +99,7 @@ namespace ImagenesPiezas
             // 
             // Btn_Voltear_Imagen
             // 
-            this.Btn_Voltear_Imagen.Location = new System.Drawing.Point(6, 208);
+            this.Btn_Voltear_Imagen.Location = new System.Drawing.Point(6, 358);
             this.Btn_Voltear_Imagen.Name = "Btn_Voltear_Imagen";
             this.Btn_Voltear_Imagen.Size = new System.Drawing.Size(226, 35);
             this.Btn_Voltear_Imagen.TabIndex = 6;
@@ -85,7 +112,7 @@ namespace ImagenesPiezas
             // Btn_Rotate
             // 
             this.Btn_Rotate.Enabled = false;
-            this.Btn_Rotate.Location = new System.Drawing.Point(6, 160);
+            this.Btn_Rotate.Location = new System.Drawing.Point(6, 310);
             this.Btn_Rotate.Name = "Btn_Rotate";
             this.Btn_Rotate.Size = new System.Drawing.Size(226, 33);
             this.Btn_Rotate.TabIndex = 3;
@@ -97,7 +124,7 @@ namespace ImagenesPiezas
             // Btn_Imagen_No_Aprobada
             // 
             this.Btn_Imagen_No_Aprobada.Enabled = false;
-            this.Btn_Imagen_No_Aprobada.Location = new System.Drawing.Point(6, 336);
+            this.Btn_Imagen_No_Aprobada.Location = new System.Drawing.Point(6, 483);
             this.Btn_Imagen_No_Aprobada.Name = "Btn_Imagen_No_Aprobada";
             this.Btn_Imagen_No_Aprobada.Size = new System.Drawing.Size(226, 36);
             this.Btn_Imagen_No_Aprobada.TabIndex = 5;
@@ -109,7 +136,7 @@ namespace ImagenesPiezas
             // Btn_Imagen_Aprobada
             // 
             this.Btn_Imagen_Aprobada.Enabled = false;
-            this.Btn_Imagen_Aprobada.Location = new System.Drawing.Point(6, 283);
+            this.Btn_Imagen_Aprobada.Location = new System.Drawing.Point(6, 430);
             this.Btn_Imagen_Aprobada.Name = "Btn_Imagen_Aprobada";
             this.Btn_Imagen_Aprobada.Size = new System.Drawing.Size(226, 38);
             this.Btn_Imagen_Aprobada.TabIndex = 4;
@@ -125,46 +152,48 @@ namespace ImagenesPiezas
             // 
             // Visualizer
             // 
-            this.Visualizer.Location = new System.Drawing.Point(257, 13);
+            this.Visualizer.Location = new System.Drawing.Point(3, 3);
             this.Visualizer.Name = "Visualizer";
-            this.Visualizer.Size = new System.Drawing.Size(995, 657);
-            this.Visualizer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Visualizer.Size = new System.Drawing.Size(758, 272);
+            this.Visualizer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.Visualizer.TabIndex = 1;
             this.Visualizer.TabStop = false;
             // 
-            // Btn_Salir
+            // ImageContainer
             // 
-            this.Btn_Salir.Location = new System.Drawing.Point(6, 615);
-            this.Btn_Salir.Name = "Btn_Salir";
-            this.Btn_Salir.Size = new System.Drawing.Size(226, 36);
-            this.Btn_Salir.TabIndex = 7;
-            this.Btn_Salir.Text = "Salir";
-            this.Btn_Salir.UseVisualStyleBackColor = true;
-            this.Btn_Salir.Click += new System.EventHandler(this.Btn_Salir_Click);
+            this.ImageContainer.AutoScroll = true;
+            this.ImageContainer.Controls.Add(this.Visualizer);
+            this.ImageContainer.Location = new System.Drawing.Point(257, 23);
+            this.ImageContainer.Name = "ImageContainer";
+            this.ImageContainer.Size = new System.Drawing.Size(995, 641);
+            this.ImageContainer.TabIndex = 2;
             // 
-            // Btn_Reiniciar
+            // ZoomTool
             // 
-            this.Btn_Reiniciar.Enabled = false;
-            this.Btn_Reiniciar.Location = new System.Drawing.Point(6, 97);
-            this.Btn_Reiniciar.Name = "Btn_Reiniciar";
-            this.Btn_Reiniciar.Size = new System.Drawing.Size(226, 36);
-            this.Btn_Reiniciar.TabIndex = 8;
-            this.Btn_Reiniciar.Text = "Cambiar Carpeta";
-            this.Btn_Reiniciar.UseVisualStyleBackColor = true;
-            this.Btn_Reiniciar.Visible = false;
-            this.Btn_Reiniciar.Click += new System.EventHandler(this.Btn_Reiniciar_Click);
+            this.ZoomTool.Enabled = false;
+            this.ZoomTool.Location = new System.Drawing.Point(6, 259);
+            this.ZoomTool.Name = "ZoomTool";
+            this.ZoomTool.Size = new System.Drawing.Size(226, 45);
+            this.ZoomTool.TabIndex = 2;
+            this.ZoomTool.Visible = false;
+            this.ZoomTool.Scroll += new System.EventHandler(this.ZoomTool_Scroll);
             // 
             // VentanaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 682);
-            this.Controls.Add(this.Visualizer);
+            this.Controls.Add(this.ImageContainer);
             this.Controls.Add(this.ControlBox);
             this.Name = "VentanaPrincipal";
             this.Text = "Imagen";
+            this.Load += new System.EventHandler(this.VentanaPrincipal_Load);
             this.ControlBox.ResumeLayout(false);
+            this.ControlBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Visualizer)).EndInit();
+            this.ImageContainer.ResumeLayout(false);
+            this.ImageContainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ZoomTool)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -181,6 +210,8 @@ namespace ImagenesPiezas
         private System.Windows.Forms.Button Btn_Voltear_Imagen;
         private System.Windows.Forms.Button Btn_Reiniciar;
         private System.Windows.Forms.Button Btn_Salir;
+        private System.Windows.Forms.Panel ImageContainer;
+        private System.Windows.Forms.TrackBar ZoomTool;
     }
 }
 
