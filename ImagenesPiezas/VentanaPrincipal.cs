@@ -26,6 +26,7 @@ namespace ImagenesPiezas
         public VentanaPrincipal()
         {
             InitializeComponent();
+            //this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
         }
 
         private void VentanaPrincipal_Load(object sender, EventArgs e)
@@ -35,6 +36,16 @@ namespace ImagenesPiezas
             ZoomTool.UseWaitCursor = false;
             this.DoubleBuffered = true;
         }
+
+        /*
+        protected override CreateParams CreateParams {
+            get {
+                CreateParams handleparam = base.CreateParams;
+                handleparam.ExStyle |= 0x02000000;
+                return handleparam;
+            }
+        }
+        */
 
         private void Btn_OpenFolder_Click(object sender, EventArgs e)
         {
@@ -47,12 +58,20 @@ namespace ImagenesPiezas
                 {
                     foreach (string file in filepaths)
                     {
-                        filenames.Add(Path.GetFileName(file));
+                        if (file.EndsWith(".jpg")||file.EndsWith(".png") || file.EndsWith(".jpeg") || file.EndsWith(".jpe") || file.EndsWith(".jif") || file.EndsWith(".jfif") || file.EndsWith(".jfi")) {
+                            filenames.Add(Path.GetFileName(file));
+                        }
                     }
                     filepaths = new string[0];
-                    ButtonSwitch(true);
                     FolderOpener.Dispose();
-                    CreateImage(path + "\\" + (string)filenames[0]);
+                    if (filenames.Count > 0)
+                    {
+                        CreateImage(path + "\\" + (string)filenames[0]);
+                        ButtonSwitch(true);
+                    }
+                    else {
+                        MessageBox.Show("No se encontraron archivos de imagenes en el directorio seleccionado.", "aviso", MessageBoxButtons.OK);
+                    }
                 }
             }
         }
@@ -114,6 +133,9 @@ namespace ImagenesPiezas
 
         private void Btn_Reiniciar_Click(object sender, EventArgs e)
         {
+            path = null;
+            filepaths = new string[0];
+            filenames = new ArrayList();
             Btn_OpenFolder_Click(sender, e);
         }
 
