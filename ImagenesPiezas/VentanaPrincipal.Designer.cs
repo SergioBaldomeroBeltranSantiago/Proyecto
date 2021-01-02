@@ -30,6 +30,7 @@ namespace ImagenesPiezas
         private void InitializeComponent()
         {
             this.ControlBox = new System.Windows.Forms.GroupBox();
+            this.ZoomTool = new System.Windows.Forms.TrackBar();
             this.Btn_Reiniciar = new System.Windows.Forms.Button();
             this.Btn_Salir = new System.Windows.Forms.Button();
             this.Btn_OpenFolder = new System.Windows.Forms.Button();
@@ -40,15 +41,20 @@ namespace ImagenesPiezas
             this.FolderOpener = new System.Windows.Forms.FolderBrowserDialog();
             this.Visualizer = new System.Windows.Forms.PictureBox();
             this.ImageContainer = new System.Windows.Forms.Panel();
-            this.ZoomTool = new System.Windows.Forms.TrackBar();
+            this.UselessOne = new System.Windows.Forms.Label();
+            this.UselessTwo = new System.Windows.Forms.Label();
+            this.UselessThree = new System.Windows.Forms.Label();
             this.ControlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ZoomTool)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Visualizer)).BeginInit();
             this.ImageContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ZoomTool)).BeginInit();
             this.SuspendLayout();
             // 
             // ControlBox
             // 
+            this.ControlBox.Controls.Add(this.UselessThree);
+            this.ControlBox.Controls.Add(this.UselessTwo);
+            this.ControlBox.Controls.Add(this.UselessOne);
             this.ControlBox.Controls.Add(this.ZoomTool);
             this.ControlBox.Controls.Add(this.Btn_Reiniciar);
             this.ControlBox.Controls.Add(this.Btn_Salir);
@@ -64,6 +70,16 @@ namespace ImagenesPiezas
             this.ControlBox.TabIndex = 0;
             this.ControlBox.TabStop = false;
             this.ControlBox.Text = "Controles";
+            // 
+            // ZoomTool
+            // 
+            this.ZoomTool.Enabled = false;
+            this.ZoomTool.Location = new System.Drawing.Point(6, 259);
+            this.ZoomTool.Name = "ZoomTool";
+            this.ZoomTool.Size = new System.Drawing.Size(226, 45);
+            this.ZoomTool.TabIndex = 2;
+            this.ZoomTool.Visible = false;
+            this.ZoomTool.Scroll += new System.EventHandler(this.ZoomTool_Scroll);
             // 
             // Btn_Reiniciar
             // 
@@ -168,15 +184,34 @@ namespace ImagenesPiezas
             this.ImageContainer.Size = new System.Drawing.Size(995, 641);
             this.ImageContainer.TabIndex = 2;
             // 
-            // ZoomTool
+            // UselessOne
             // 
-            this.ZoomTool.Enabled = false;
-            this.ZoomTool.Location = new System.Drawing.Point(6, 259);
-            this.ZoomTool.Name = "ZoomTool";
-            this.ZoomTool.Size = new System.Drawing.Size(226, 45);
-            this.ZoomTool.TabIndex = 2;
-            this.ZoomTool.Visible = false;
-            this.ZoomTool.Scroll += new System.EventHandler(this.ZoomTool_Scroll);
+            this.UselessOne.AutoSize = true;
+            this.UselessOne.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UselessOne.Location = new System.Drawing.Point(6, 240);
+            this.UselessOne.Name = "UselessOne";
+            this.UselessOne.Size = new System.Drawing.Size(20, 16);
+            this.UselessOne.TabIndex = 2;
+            this.UselessOne.Text = "x1";
+            // 
+            // UselessTwo
+            // 
+            this.UselessTwo.AutoSize = true;
+            this.UselessTwo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UselessTwo.Location = new System.Drawing.Point(212, 240);
+            this.UselessTwo.Name = "UselessTwo";
+            this.UselessTwo.Size = new System.Drawing.Size(20, 16);
+            this.UselessTwo.TabIndex = 9;
+            this.UselessTwo.Text = "x6";
+            // 
+            // UselessThree
+            // 
+            this.UselessThree.AutoSize = true;
+            this.UselessThree.Location = new System.Drawing.Point(84, 211);
+            this.UselessThree.Name = "UselessThree";
+            this.UselessThree.Size = new System.Drawing.Size(57, 25);
+            this.UselessThree.TabIndex = 2;
+            this.UselessThree.Text = "Zoom";
             // 
             // VentanaPrincipal
             // 
@@ -190,10 +225,10 @@ namespace ImagenesPiezas
             this.Load += new System.EventHandler(this.VentanaPrincipal_Load);
             this.ControlBox.ResumeLayout(false);
             this.ControlBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ZoomTool)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Visualizer)).EndInit();
             this.ImageContainer.ResumeLayout(false);
             this.ImageContainer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ZoomTool)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -212,6 +247,9 @@ namespace ImagenesPiezas
         private System.Windows.Forms.Button Btn_Salir;
         private System.Windows.Forms.Panel ImageContainer;
         private System.Windows.Forms.TrackBar ZoomTool;
+        private System.Windows.Forms.Label UselessThree;
+        private System.Windows.Forms.Label UselessTwo;
+        private System.Windows.Forms.Label UselessOne;
     }
 }
 
